@@ -10,29 +10,53 @@ import xlsxwriter
 class ExcelUtil:
     def __init__(self,file_name,mode='r'):
         if mode == 'r':
+            print("r")
             self.workbook = xlrd.open_workbook(file_name)
         elif mode == 'w':
+            print("w")
             self.workbook = xlsxwriter.Workbook(file_name)
         else:
             raise Exception('Error: init Excel class with error mode: %s' % mode)
+
+    def get_sheetnames(self):
+        """
+        获取所有Excel表名，excelfile.get_sheetnames()
+        """
+        sheet_names = self.workbook.sheet_names()
+        return sheet_names
+
+    def read_case(self):
+        sheet_names = self.get_sheetnames()
+        case_data = []
+        for i in sheet_names:
+            if (i.split('_'))[1] == "APP":
+                sheet = self.workbook.sheet_by_name(i)
+                nrows = sheet.nrows
+
+                for i in range(nrows):
+                    case_data.append(sheet.row_values(i))
+        # print(case_data)
+        return case_data
+
     
-    def read(self,sheet_name):
-        """
-        ExcelUtil.read("Excelsheet名称"),读取Excel表中sheet表内容，参数为sheet名字
-        return[[],[],[].....]
-        """
-        sheet = self.workbook.sheet_by_name(sheet_name)
-        nrows = sheet.nrows
-        data = []
-        for i in range(nrows):
-            data.append(sheet.row_values(i))
-        return data
+    # def read(self,sheet_name):
+    #     """
+    #     ExcelUtil.read("Excelsheet名称"),读取Excel表中sheet表内容，参数为sheet名字
+    #     return[[],[],[].....]
+    #     """
+    #     sheet = self.workbook.sheet_by_name(sheet_name)
+    #     nrows = sheet.nrows
+    #     data = []
+    #     for i in range(nrows):
+    #         data.append(sheet.row_values(i))
+    #     return data
 
     def param_case(data):
         """
         前置方法data = ExcelUtil.read("Excelsheet名称")
         ExcelUtil.param_case(data),接收read读取的列表测试数据，并遍历组成[{},{}]格式，ddt调用格式
         """
+        print(data)
         list_dict_data = []
         list_key = data[0]
         for d in data[1:]:
@@ -40,6 +64,7 @@ class ExcelUtil:
             for i in range(len(list_key)):
                 dict_data[list_key[i]] = str(d[i]).strip()
             list_dict_data.append(dict_data)
+        print(list_dict_data)
         return list_dict_data
 
     def param_setting(data,server_name):
@@ -58,8 +83,10 @@ class ExcelUtil:
 if __name__ == '__main__':
     excelpath = r'E:\WorkSpaces\MyGit\autopytest\autopytest\testcase\carsir_api_testcase.xlsx'
     excelfile = ExcelUtil(excelpath,'r')
-    # exceldata = excelfile.read("CARSIR_APP")
-    # ExcelUtil.param_case(exceldata)
-    setting_data = excelfile.read("API_SETTING")
-    ExcelUtil.param_setting(setting_data,"CarSir")
-    # excelfile.get_sheet("CARSIR_APP")
+    data = excelfile.read_case()
+    ExcelUtil.param_case(data)
+    # # exceldata = excelfile.read("CARSIR_APP")
+    # # ExcelUtil.param_case(exceldata)
+    # setting_data = excelfile.read("API_SETTING")
+    # ExcelUtil.param_setting(setting_data,"CarSir")
+    # # excelfile.get_sheet("CARSIR_APP")

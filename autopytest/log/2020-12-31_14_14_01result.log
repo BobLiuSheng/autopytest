@@ -1,0 +1,5 @@
+Thu, 31 Dec 2020 14:14:01 run_this.py[line:45] INFO <unittest.suite.TestSuite tests=[<unittest.suite.TestSuite tests=[<unittest.suite.TestSuite tests=[<test_api.Test_api testMethod=test_api_1>, <test_api.Test_api testMethod=test_api_2>]>]>]>
+Thu, 31 Dec 2020 14:14:01 connectionpool.py[line:975] DEBUG Starting new HTTPS connection (1): test.carsir.xin:443
+Thu, 31 Dec 2020 14:14:01 connectionpool.py[line:461] DEBUG https://test.carsir.xin:443 "POST /olympic/api-resource/sms/customer/login/sendCode?mobile=18092707495 HTTP/1.1" 200 58
+Thu, 31 Dec 2020 14:14:01 connectionpool.py[line:975] DEBUG Starting new HTTPS connection (1): test.carsir.xin:443
+Thu, 31 Dec 2020 14:14:01 connectionpool.py[line:461] DEBUG https://test.carsir.xin:443 "POST /olympic/api-resource/sms/customer/login/sendCode?mobile=18092707495 HTTP/1.1" 200 58

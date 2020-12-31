@@ -32,7 +32,11 @@ class Test_api(unittest.TestCase):
     def test_api(self,data):
         path = data["接口请求地址"]
         url = str(host + path)
-        requests.post(url=url,headers = header)
+        r = requests.post(url=url,headers = header)
+        responsemsg=json.loads(json.dumps(r.json()))
+        print("响应体：",responsemsg["message"])
+
+
 
 if __name__ == '__main__':
     unittest.main()
